@@ -16,9 +16,17 @@
  * processing a request
  *
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 
-import { prisma } from "../db";
+/**
+ * 2. INITIALIZATION
+ *
+ * This is where the trpc trpc is initialized, connecting the context and
+ * transformer
+ */
+import { initTRPC } from '@trpc/server';
+import superjson from 'superjson';
+import { prisma } from '../db';
 
 type CreateContextOptions = Record<string, never>;
 
@@ -31,44 +39,31 @@ type CreateContextOptions = Record<string, never>;
  * - trpc's `createSSGHelpers` where we don't have req/res
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  return {
-    prisma,
-  };
-};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const createInnerTRPCContext = (_opts: CreateContextOptions) => ({
+  prisma
+});
 
 /**
  * This is the actual context you'll use in your router. It will be used to
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
-};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const createTRPCContext = (_opts: CreateNextContextOptions) => createInnerTRPCContext({});
 
-/**
- * 2. INITIALIZATION
- *
- * This is where the trpc api is initialized, connecting the context and
- * transformer
- */
-import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
-
-const t = initTRPC
-  .context<Awaited<ReturnType<typeof createTRPCContext>>>()
-  .create({
-    transformer: superjson,
-    errorFormatter({ shape }) {
-      return shape;
-    },
-  });
+const t = initTRPC.context<Awaited<ReturnType<typeof createTRPCContext>>>().create({
+  transformer: superjson,
+  errorFormatter({ shape }) {
+    return shape;
+  }
+});
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
  *
  * These are the pieces you use to build your tRPC API. You should import these
- * a lot in the /src/server/api/routers folder
+ * a lot in the /src/server/trpc/routers folder
  */
 
 /**
