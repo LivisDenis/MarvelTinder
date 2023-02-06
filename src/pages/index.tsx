@@ -1,30 +1,49 @@
 import type { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { trpc } from '../utils/trpc';
-import {prisma} from "../../server/db";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: 'Clietn' });
-  const char = trpc.character.character.useQuery({ filters: { limit: 100 } });
-    console.log(char.data)
+  const { data } = trpc.character.character.useQuery(
+    { params: { limit: 1 } },
+    {
+      refetchOnWindowFocus: false
+    }
+  );
 
-  if (!hello.data || !char.data) {
+  if (!data?.response) {
     return <div>Loading...</div>;
   }
 
-  const character = char.data.response;
+  const character = data.response;
 
   return (
-    <div>
-      <p className='text-3xl font-bold underline'>{hello.data.greeting}</p>
-      <div className='w-[400px]'>
-        {character?.results?.map((char) => (
-          <div className='mt-4'>
-            <h2 className='text-[24px] text-red-600'>{char.name}</h2>
-            <p>{char.description}</p>
-          </div>
-        ))}
+    <section className='flex h-screen flex-col items-center justify-center'>
+      <div className='mb-4'>
+        <h1 className='text-xl font-bold'>Do you like them all ☄️ ?</h1>
       </div>
-    </div>
+      <div className='flex flex-col gap-4 rounded-lg bg-slate-600 p-4'>
+        <Link href={`/pokemon/${character.id}`}>
+          <div>
+            <div className='flex items-center justify-between'>
+              <h2 className='text-[28px] font-medium'>{character.name}</h2>
+              <span>#{character.id}</span>
+            </div>
+
+            <div className='item-center mt-3 flex justify-center'>
+              <Image
+                alt={`pokemon ${character.name}`}
+                src={character.image}
+                width={300}
+                height={300}
+                layout='fixed'
+                className='animate-fade-in'
+              />
+            </div>
+          </div>
+        </Link>
+      </div>
+    </section>
   );
 };
 

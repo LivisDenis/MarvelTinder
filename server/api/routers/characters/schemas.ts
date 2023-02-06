@@ -13,12 +13,7 @@ export const CHARACTER_INPUTS = {
   getCharacter: z.object({ params: z.object({ id: z.number() }) }),
   getCharacters: z
     .object({
-      // params: z
-      //     .object({
-      //         page: z.number().optional()
-      //     })
-      //     .optional(),
-      filters: CHARACTER_FILTER_INPUT
+      params: CHARACTER_FILTER_INPUT
     })
     .optional(),
   getCharactersInfo: z

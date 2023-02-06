@@ -9,6 +9,13 @@
 const config = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'i.annihil.us'
+      }
+    ]
+  },
   i18n: {
     locales: ["en"],
     defaultLocale: "en",

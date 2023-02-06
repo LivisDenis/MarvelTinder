@@ -1,11 +1,12 @@
 import { createTRPCRouter, publicProcedure } from '../../trpc';
 import { CHARACTER_INPUTS } from './schemas';
-import { getCharacters } from '../../../../src/utils/api/characters';
 import { wrapSuccess } from '../../../utils/wrapSuccess';
 
 export const characterRouter = createTRPCRouter({
   character: publicProcedure.input(CHARACTER_INPUTS.getCharacters).query(async ({ input }) => {
-    const characterResponse = await getCharacters({ params: { ...input?.filters } });
+    const randomId = Math.ceil(Math.random() * 1000);
+    console.log(randomId);
+    const characterResponse = await prisma?.heroes.findFirst({ where: { id: randomId } });
 
     return wrapSuccess(characterResponse);
   })
