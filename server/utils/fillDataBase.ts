@@ -9,9 +9,9 @@ export const fillDataBase = async () => {
   });
 
   const characters = data?.results?.map((char) => ({
-    name: char.name,
+    name: char.name!,
     image: `${char.thumbnail?.path}.${char.thumbnail?.extension}`
   }));
 
-  await prisma?.heroes.createMany({ data: characters });
+  await prisma?.heroes.createMany({ data: characters! });
 };
