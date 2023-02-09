@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '../components/Button';
 import { trpc } from '../utils/trpc';
+import { Skeleton } from '../components/Skeleton';
 
 const Home: NextPage = () => {
   const getMarvelQuery = trpc.character.getCharacter.useQuery();
@@ -12,7 +13,7 @@ const Home: NextPage = () => {
   });
 
   if (!getMarvelQuery.data?.response) {
-    return <div>Loading...</div>;
+    return <div>loading...</div>;
   }
 
   const character = getMarvelQuery.data.response;
@@ -23,24 +24,27 @@ const Home: NextPage = () => {
         <h1 className='text-xl font-bold'>Do you like them all ☄️ ?</h1>
       </div>
       <div className='flex flex-col gap-4 rounded-lg bg-slate-600 p-4'>
-        <Link href={`/marvel/${character.id}`}>
-          <div>
-            <div className='flex items-center justify-between'>
-              <h2 className='text-[24px] font-medium'>{character.name}</h2>
-              <span>#{character.id}</span>
-            </div>
+        {(getMarvelQuery.isRefetching || !getMarvelQuery.data?.response) && <Skeleton />}
+        {!getMarvelQuery.isRefetching && (
+          <Link href={`/marvel/${character.id}`}>
+            <div>
+              <div className='flex items-center justify-between'>
+                <h2 className='text-[20px] font-medium'>{character.name}</h2>
+                <span>#{character.id}</span>
+              </div>
 
-            <div className='item-center mt-3 flex justify-center'>
-              <Image
-                alt={`pokemon ${character.name}`}
-                src={character.image}
-                width={300}
-                height={300}
-                className='animate-fade-in w-auto'
-              />
+              <div className='item-center mt-3 flex justify-center'>
+                <Image
+                  alt={`pokemon ${character.name}`}
+                  src={character.image}
+                  width={300}
+                  height={300}
+                  className='animate-fade-in h-[250px] w-[300px] object-cover'
+                />
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        )}
         <div className='flex gap-3'>
           <Button
             onClick={() => rateMarvelQuery.mutate({ id: character?.id!, rate: 'like' })}

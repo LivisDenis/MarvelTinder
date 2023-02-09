@@ -14,7 +14,7 @@ export const characterRouter = createTRPCRouter({
     const characters = await prisma?.heroes.findMany({
       take: input?.limit,
       orderBy: {
-        likes: 'asc'
+        likes: 'desc'
       }
     });
 

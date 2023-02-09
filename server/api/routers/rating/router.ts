@@ -20,9 +20,6 @@ export const ratingRouter = createTRPCRouter({
       }
     });
 
-    console.log('like', characterResponse?.likes);
-    console.log('dis', characterResponse?.dislikes);
-
     return wrapSuccess(characterResponse);
   })
 });
