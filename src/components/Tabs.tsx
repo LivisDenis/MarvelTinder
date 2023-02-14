@@ -1,22 +1,22 @@
-import { useState } from 'react'
-import { Tab } from '@headlessui/react'
-import {ComicList, SeriesList, StoryList} from "../types";
+import { useState } from 'react';
+import { Tab } from '@headlessui/react';
+import { ComicList, SeriesList, StoryList } from '../types';
 
 interface DropdownProps {
-    comics: ComicList;
-    series: SeriesList;
-    stories: StoryList;
+  comics: ComicList;
+  series: SeriesList;
+  stories: StoryList;
 }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Tabs = ({stories, series, comics}: DropdownProps) => {
+const Tabs = ({ stories, series, comics }: DropdownProps) => {
   const [categories] = useState({
-      Stories: stories.items,
-      Series: series.items,
-      Comics: comics.items,
+    Stories: stories.items,
+    Series: series.items,
+    Comics: comics.items
   });
 
   return (
@@ -50,10 +50,10 @@ const Tabs = ({stories, series, comics}: DropdownProps) => {
               )}
             >
               <ul>
-                {!posts[0] && <div className={'text-center text-black'}>There is nothing 😕</div>}
-                {posts.map((post, i) => (
-                  <li key={i} className='relative rounded-md p-3 hover:bg-gray-100'>
-                    <h3 className='text-sm font-medium text-black leading-5'>{post.name}</h3>
+                {!posts[0] && <div className='text-center text-black'>There is nothing 😕</div>}
+                {posts.map((post, idx) => (
+                  <li key={idx} className='relative rounded-md p-3 hover:bg-gray-100'>
+                    <h3 className='text-sm font-medium leading-5 text-black'>{post.name}</h3>
                   </li>
                 ))}
               </ul>
@@ -63,6 +63,6 @@ const Tabs = ({stories, series, comics}: DropdownProps) => {
       </Tab.Group>
     </div>
   );
-}
+};
 
 export default Tabs;
