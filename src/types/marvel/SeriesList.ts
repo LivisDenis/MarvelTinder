@@ -4,5 +4,5 @@ export interface SeriesList {
   available?: number;
   returned?: number;
   collectionURI?: string;
-  item: SeriesSummary[];
+  items: SeriesSummary[];
 }

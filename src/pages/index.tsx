@@ -6,7 +6,7 @@ import { trpc } from '../utils/trpc';
 import { Skeleton } from '../components/Skeleton';
 
 const Home: NextPage = () => {
-  const getMarvelQuery = trpc.character.getCharacter.useQuery();
+  const getMarvelQuery = trpc.character.getCharacterRandom.useQuery();
 
   const rateMarvelQuery = trpc.rate.rate.useMutation({
     onSuccess: () => getMarvelQuery.refetch()
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
       <div className='flex flex-col gap-4 rounded-lg bg-slate-600 p-4'>
         {(getMarvelQuery.isRefetching || !getMarvelQuery.data?.response) && <Skeleton />}
         {!getMarvelQuery.isRefetching && (
-          <Link href={`/marvel/${character.id}`}>
+          <Link href={`/marvel/${character.name}`}>
             <div>
               <div className='flex items-center justify-between'>
                 <h2 className='text-[20px] font-medium'>{character.name}</h2>

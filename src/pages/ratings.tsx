@@ -13,20 +13,19 @@ const Ratings: NextPage = () => {
       <h1 className='text-center text-[30px] font-bold'>Most popular hero</h1>
       <section className='mt-4 grid grid-cols-4 gap-x-3 gap-y-4'>
         {marvel?.map((char) => (
-          <div key={char.id} className='flex max-w-[200px] flex-col bg-gray-600 rounded-[5px]'>
+          <div key={char.id} className='flex max-w-[200px] flex-col rounded-[5px] bg-gray-600'>
             <Image
               src={char.image}
               alt={char.name}
               width={200}
               height={200}
-              className='h-[200px] w-[200px] object-cover rounded-tl-[5px] rounded-tr-[5px]'
+              className='h-[200px] w-[200px] rounded-tl-[5px] rounded-tr-[5px] object-cover'
             />
             <div className='flex flex-col p-2'>
-                <Link
-                    href={`/marvel/${char.name.replaceAll(' ', '-')}`}
-                    className={'mb-2 text-[14px] font-bold'}
-                >{char.name}</Link>
-              <span className={'text-[12px]'}>Likes: {char.likes}</span>
+              <Link href={`/marvel/${char.name}`} className='mb-2 text-[14px] font-bold'>
+                {char.name}
+              </Link>
+              <span className='text-[12px]'>Likes: {char.likes}</span>
               <span className='mt-1 text-[12px]'>Dislikes: {char.dislikes}</span>
             </div>
           </div>
