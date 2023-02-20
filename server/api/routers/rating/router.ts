@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure } from '../../trpc';
 import { RATING } from './schemas';
 import { wrapSuccess } from '../../../utils/wrapSuccess';
+import {prisma} from '../../../db'
 
 export const ratingRouter = createTRPCRouter({
   rate: publicProcedure.input(RATING.rateChar).mutation(async ({ input }) => {

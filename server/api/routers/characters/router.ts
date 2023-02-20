@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure } from '../../trpc';
 import { CHARACTER_INPUTS } from './schemas';
 import { wrapSuccess } from '../../../utils/wrapSuccess';
+import {prisma} from '../../../db'
 
 export const characterRouter = createTRPCRouter({
   getCharacter: publicProcedure.input(CHARACTER_INPUTS.getCharacter).query(async ({ input }) => {
