@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Image from 'next/image';
 import { prisma } from '../../../server/db';
@@ -46,22 +47,31 @@ const Character: NextPage<CharacterPageProps> = ({ hero }) => {
   const imgPath = `${character.thumbnail?.path}.${character.thumbnail?.extension}`;
 
   return (
-    <div className='flex w-[745px] flex-col gap-4 rounded-lg bg-slate-600 p-4'>
-      <div className='flex'>
-        <div className='mr-4'>
-          <h1 className='text-[24px] font-bold'>{character.name}</h1>
-          <Image
-            alt={`hero ${character.name}`}
-            src={imgPath}
-            width={300}
-            height={300}
-            className='animate-fade-in mt-2 h-[250px] w-[300px] object-cover'
+    <>
+      <Head>
+        <title>{character.name}</title>
+      </Head>
+      <div className='flex w-[745px] flex-col gap-4 rounded-lg bg-slate-600 p-4'>
+        <div className='flex'>
+          <div className='mr-4'>
+            <h1 className='text-[24px] font-bold'>{character.name}</h1>
+            <Image
+              alt={`hero ${character.name}`}
+              src={imgPath}
+              width={300}
+              height={300}
+              className='animate-fade-in mt-2 h-[250px] w-[300px] object-cover'
+            />
+          </div>
+          <Tabs
+            comics={character.comics!}
+            series={character.series!}
+            stories={character.stories!}
           />
         </div>
-        <Tabs comics={character.comics!} series={character.series!} stories={character.stories!} />
+        <p className='text-[18px] font-bold'>{character.description}</p>
       </div>
-      <p className='text-[18px] font-bold'>{character.description}</p>
-    </div>
+    </>
   );
 };
 
