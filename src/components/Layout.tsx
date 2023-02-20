@@ -7,8 +7,8 @@ interface LayoutProps {
   children: ReactNode;
 }
 const Layout = ({ children }: LayoutProps) => (
-  <div className='flex flex-col'>
-    <div className='flex justify-center p-7 [&_a]:mx-4'>
+  <div className='flex flex-col py-7'>
+    <div className='flex justify-center  [&_a]:mx-4'>
       <Link href={HOME}>
         <Button>Home</Button>
       </Link>

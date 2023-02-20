@@ -11,7 +11,7 @@ export const characterRouter = createTRPCRouter({
   }),
 
   getCharacterRandom: publicProcedure.input(CHARACTER_INPUTS.getCharacterRandom).query(async () => {
-    const randomId = Math.ceil(Math.random() * 1000);
+    const randomId = Math.ceil(Math.random() * 649);
     const characterResponse = await prisma?.heroes.findFirst({ where: { id: randomId } });
 
     return wrapSuccess(characterResponse);
