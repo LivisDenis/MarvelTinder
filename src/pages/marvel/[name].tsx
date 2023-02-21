@@ -13,7 +13,7 @@ export const getStaticPaths = async () => {
   const heroes = await prisma?.heroes.findMany();
 
   const paths = heroes?.map((hero) => ({
-    params: { name: hero.name }
+    params: { name: hero.name.replaceAll(' ', '--') }
   }));
 
   return { paths, fallback: false };
@@ -21,8 +21,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext<{ name: string }>) => {
   if (params?.name) {
+    const name = params.name.replaceAll('--', ' ')
     // const hero = await prisma?.heroes.findFirst({ where: { name: +params.name } });
-    const { data: hero } = await api.get('', { params: { name: params.name } });
+    const { data: hero } = await api.get('', { params: { name } });
 
     if (!hero)
       return {
@@ -39,7 +40,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<{ name: s
     };
   }
 
-  throw new Error('no id');
+  throw new Error('no name');
 };
 const Character: NextPage<CharacterPageProps> = ({ hero }) => {
   const character = hero.data?.results?.[0]!;

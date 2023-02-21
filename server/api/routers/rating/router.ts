@@ -5,7 +5,7 @@ import {prisma} from '../../../db'
 
 export const ratingRouter = createTRPCRouter({
   rate: publicProcedure.input(RATING.rateChar).mutation(async ({ input }) => {
-    const characterResponse = await prisma?.heroes.update({
+    const characterResponse = await prisma.heroes.update({
       where: { id: input.id },
       data: {
         ...(input.rate === 'like' && {
