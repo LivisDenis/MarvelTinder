@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 //   // eslint-disable-next-line no-var,vars-on-top
 //   var prisma: PrismaClient | undefined;
 // }
-export const prisma = new PrismaClient()
+export const prisma = new PrismaClient();
 // export const prisma =
 //   global.prisma ||
 //   new PrismaClient({

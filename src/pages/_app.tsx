@@ -1,19 +1,12 @@
 import Head from 'next/head';
 import type { AppType } from 'next/app';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ToastContainer } from 'react-toastify';
 import { trpc } from '../utils/trpc';
-
-import '../styles/globals.css';
 import Layout from '../components/Layout';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false
-    }
-  }
-});
+import '../styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   const seo = {
     title: 'MarvelTinder ☄️',
@@ -28,10 +21,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <Layout>
-        <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
-        </QueryClientProvider>
+        <Component {...pageProps} />
       </Layout>
+      <ToastContainer />
     </>
   );
 };

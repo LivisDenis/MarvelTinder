@@ -22,7 +22,10 @@ const Ratings: NextPage = () => {
               className='h-[200px] w-[200px] rounded-tl-[5px] rounded-tr-[5px] object-cover'
             />
             <div className='flex flex-col p-2'>
-              <Link href={`/marvel/${char.name.replaceAll(' ', '--')}`} className='mb-2 text-[14px] font-bold'>
+              <Link
+                href={`/marvel/${char.name.replaceAll(' ', '--')}`}
+                className='mb-2 text-[14px] font-bold'
+              >
                 {char.name}
               </Link>
               <span className='text-[12px]'>Likes: {char.likes}</span>

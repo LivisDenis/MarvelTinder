@@ -21,7 +21,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext<{ name: string }>) => {
   if (params?.name) {
-    const name = params.name.replaceAll('--', ' ')
+    const name = params.name.replaceAll('--', ' ');
     // const hero = await prisma?.heroes.findFirst({ where: { name: +params.name } });
     const { data: hero } = await api.get('', { params: { name } });
 

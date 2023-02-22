@@ -1,5 +1,5 @@
 import { getCharacters } from '../../src/utils/api/characters';
-import {prisma} from "../db";
+import { prisma } from '../db';
 
 export const fillDataBase = async () => {
   const data = await getCharacters({
