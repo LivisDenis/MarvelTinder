@@ -1,4 +1,5 @@
 import { getCharacters } from '../../src/utils/api/characters';
+import {prisma} from "../db";
 
 export const fillDataBase = async () => {
   const data = await getCharacters({
@@ -13,5 +14,5 @@ export const fillDataBase = async () => {
     image: `${char.thumbnail?.path}.${char.thumbnail?.extension}`
   }));
 
-  await prisma?.heroes.createMany({ data: characters! });
+  await prisma.heroes.createMany({ data: characters! });
 };
