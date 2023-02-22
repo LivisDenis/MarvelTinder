@@ -10,6 +10,7 @@ import { createTRPCNext } from '@trpc/next';
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import superjson from 'superjson';
 
+import { toast } from 'react-toastify';
 import { AppRouter } from '../../server/api/root';
 
 const getBaseUrl = () => {
@@ -43,7 +44,17 @@ export const trpc = createTRPCNext<AppRouter>({
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`
         })
-      ]
+      ],
+
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+            onError: (error) => toast.error((error as Error).message)
+          }
+        }
+      }
     };
   },
   /**
